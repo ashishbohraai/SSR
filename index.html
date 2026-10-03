@@ -35,7 +35,7 @@ button.g{background:rgba(255,255,255,.1);box-shadow:none;border:1px solid rgba(2
 .ring{width:170px;height:170px;border-radius:50%;margin:10px auto;display:grid;place-items:center}
 .ring div{width:138px;height:138px;border-radius:50%;background:#17142f;display:grid;place-items:center;font-size:38px;font-weight:800}
 .hide{display:none}
-.q{min-height:80px}button.opt{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);box-shadow:none;text-align:left;font-weight:600}button.opt.right{background:linear-gradient(135deg,#1fb97c,#2ecc8f);border-color:transparent}button.opt.wrong{background:linear-gradient(135deg,#f0476a,#ff6b81);border-color:transparent;animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#snd{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:5;width:44px;height:44px;padding:0;margin:0;border-radius:50%;font-size:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);box-shadow:none}.tn{font-weight:700;color:var(--gold)}.tn.low{color:var(--no)}.tbar{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-top:14px}.tbar i{display:block;height:100%;width:100%;background:var(--gold);border-radius:3px}#msg{color:var(--no);font-weight:700;margin-top:12px;text-align:center}</style></head><body><main>
+.q{min-height:80px}button.opt{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);box-shadow:none;text-align:left;font-weight:600}button.opt.right{background:linear-gradient(135deg,#1fb97c,#2ecc8f);border-color:transparent}button.opt.wrong{background:linear-gradient(135deg,#f0476a,#ff6b81);border-color:transparent;animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#snd{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:5;width:44px;height:44px;padding:0;margin:0;border-radius:50%;font-size:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);box-shadow:none}.tn{font-weight:700;color:var(--gold)}.tn.low{color:var(--no)}.tbar{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-top:14px}.tbar i{display:block;height:100%;width:100%;background:var(--gold);border-radius:3px}#msg{color:var(--no);font-weight:700;margin-top:12px;text-align:center}.credit{text-align:center;margin-top:22px;font-size:13px;letter-spacing:.1em;color:var(--mu)}.credit::before{content:'✦ ';color:var(--gold)}.credit::after{content:' ✦';color:var(--gold)}</style></head><body><main>
 <div id="app"></div>
 <button id="snd"></button>
 </main>
@@ -103,7 +103,7 @@ function home(){
 app.innerHTML=`<div class="hero"><div class="reel">🎬</div><div class="kick">A TRIBUTE QUIZ</div><h1>Sushant Singh Rajput</h1><div class="sub">Film Quiz</div>
 <div class="chips"><span>50 questions</span><span>11 films</span><span>2013 – 2020</span></div></div>
 <div class="card"><p class="mu" style="margin:0 0 6px">Pick the right answer for each question. A chime plays when you get it right.</p>
-<button id="a">▶ Start in film order</button><button class="g" id="b">🔀 Shuffle questions</button></div>`;
+<button id="a">▶ Start in film order</button><button class="g" id="b">🔀 Shuffle questions</button></div><div class="credit">For Sushant by Ashish Bohra</div>`;
 document.getElementById('a').onclick=()=>start(false);
 document.getElementById('b').onclick=()=>start(true);}
 function start(sh,list){order=list||(sh?shuffle(Q.map((_,k)=>k)):Q.map((_,k)=>k));i=0;score=0;missed=[];show();}
@@ -131,7 +131,7 @@ const msg=p>=90?"Superfan! 🌟":p>=70?"Great memory!":p>=40?"Good effort. Rewat
 app.innerHTML=`<div class="hero"><div class="kick">YOUR RESULT</div><h1>${msg}</h1></div><div class="card" style="text-align:center">
 <div class="ring" style="background:conic-gradient(var(--gold) ${p}%,rgba(255,255,255,.12) 0)"><div>${score}/${order.length}</div></div>
 <p class="mu">${p}% correct</p>
-${missed.length?`<button id="m">Retry ${missed.length} missed</button>`:''}<button class="g" id="h">Back to start</button></div>`;
+${missed.length?`<button id="m">Retry ${missed.length} missed</button>`:''}<button class="g" id="h">Back to start</button></div><div class="credit">For Sushant by Ashish Bohra</div>`;
 if(missed.length)document.getElementById('m').onclick=()=>start(true,shuffle(missed));
 document.getElementById('h').onclick=home;}
 setSnd(snd);
