@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SSR Film Quiz</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--tx:#1d1d1f;--mu:#6b6b70;--ac:#2f5bea;--ok:#1f9d55;--no:#d64545;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121316;--card:#1d1f24;--tx:#f1f1f3;--mu:#9a9aa3;--ac:#7b9bff}}
+:root[data-theme="dark"]{--bg:#121316;--card:#1d1f24;--tx:#f1f1f3;--mu:#9a9aa3;--ac:#7b9bff}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--tx);font-family:-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:480px;margin:0 auto;padding:20px 16px 32px}
+h1{font-size:26px;margin:8px 0}
+.mu{color:var(--mu);font-size:14px}
+.card{background:var(--card);border-radius:18px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-top:16px}
+.q{font-size:20px;line-height:1.35;min-height:90px}
+.tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ac);font-weight:600}
+.bar{height:6px;background:rgba(128,128,128,.25);border-radius:3px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .3s}
+button{font:inherit;border:0;border-radius:12px;padding:14px;width:100%;margin-top:12px;background:var(--ac);color:#fff;font-weight:600}
+button.g{background:rgba(128,128,128,.2);color:var(--tx)}
+.row{display:flex;gap:10px}
+.ok{background:var(--ok)}.no{background:var(--no)}
+.ans{font-size:20px;font-weight:700;margin-top:14px;color:var(--ok)}
+.big{font-size:56px;font-weight:800;text-align:center;margin:10px 0}
+.hide{display:none}
+</style></head><body><main>
+<div id="app"></div>
+</main>
+<script>
+const Q=[
+["Kai Po Che! / Shuddh Desi Romance","Which film marked his Bollywood debut?","Kai Po Che! (2013)"],
+["Kai Po Che! / Shuddh Desi Romance","Kai Po Che! is based on which Chetan Bhagat novel?","The 3 Mistakes of My Life"],
+["Kai Po Che! / Shuddh Desi Romance","His character's name in Kai Po Che!?","Ishaan Bhatt"],
+["Kai Po Che! / Shuddh Desi Romance","Which city is Kai Po Che! set in?","Ahmedabad"],
+["Kai Po Che! / Shuddh Desi Romance","Who played Omi in Kai Po Che!?","Rajkummar Rao"],
+["Kai Po Che! / Shuddh Desi Romance","Who directed both Kai Po Che! and Kedarnath?","Abhishek Kapoor"],
+["Kai Po Che! / Shuddh Desi Romance","His character's name in Shuddh Desi Romance?","Raghu"],
+["Kai Po Che! / Shuddh Desi Romance","Which city is Shuddh Desi Romance set in?","Jaipur"],
+["Kai Po Che! / Shuddh Desi Romance","Who played Gayatri opposite him?","Parineeti Chopra"],
+["Kai Po Che! / Shuddh Desi Romance","Who directed Shuddh Desi Romance?","Maneesh Sharma"],
+["PK / Byomkesh","Which character did he play in a cameo in PK?","Sarfaraz"],
+["PK / Byomkesh","Who directed PK?","Rajkumar Hirani"],
+["PK / Byomkesh","Who directed Detective Byomkesh Bakshy!?","Dibakar Banerjee"],
+["PK / Byomkesh","Byomkesh Bakshy! is set in which year and city?","1943, Calcutta"],
+["PK / Byomkesh","Which actor played Ajit?","Anand Tiwari"],
+["M.S. Dhoni","Who directed M.S. Dhoni: The Untold Story?","Neeraj Pandey"],
+["M.S. Dhoni","What job did Dhoni hold at Kharagpur station?","Ticket collector (TTE)"],
+["M.S. Dhoni","Who played Sakshi?","Kiara Advani"],
+["M.S. Dhoni","Who played Priyanka Jha?","Disha Patani"],
+["M.S. Dhoni","Who played Dhoni's father, Pan Singh?","Anupam Kher"],
+["M.S. Dhoni","Which match forms the film's climax?","The 2011 Cricket World Cup final"],
+["M.S. Dhoni","What is Dhoni's hometown?","Ranchi"],
+["M.S. Dhoni","Which football position does young Dhoni play?","Goalkeeper"],
+["Raabta","His character's name in Raabta?","Shiv Kakkar"],
+["Raabta","Who was his co-star in Raabta?","Kriti Sanon"],
+["Raabta","Which European city features prominently in Raabta?","Budapest"],
+["Kedarnath","His character's name in Kedarnath?","Mansoor"],
+["Kedarnath","What was Mansoor's occupation?","Pithu (porter carrying pilgrims)"],
+["Kedarnath","Whose Bollywood debut was Kedarnath?","Sara Ali Khan"],
+["Kedarnath","Which real-life disaster is the film's backdrop?","The 2013 Uttarakhand floods"],
+["Sonchiriya","His character's name in Sonchiriya?","Lakhna"],
+["Sonchiriya","What is the setting of Sonchiriya?","The Chambal ravines (dacoit country), 1975"],
+["Sonchiriya","Who directed Sonchiriya?","Abhishek Chaubey"],
+["Sonchiriya","Who played Indumati?","Bhumi Pednekar"],
+["Sonchiriya","Which actor played Man Singh?","Manoj Bajpayee"],
+["Chhichhore","Who directed Chhichhore?","Nitesh Tiwari"],
+["Chhichhore","His character's name in Chhichhore?","Anirudh \"Anni\" Pathak"],
+["Chhichhore","What was the 'losers' hostel called?","H3"],
+["Chhichhore","Who played Maya?","Shraddha Kapoor"],
+["Chhichhore","Which actor played Sexa?","Varun Sharma"],
+["Chhichhore","Which actor played Raggie?","Prateik Babbar"],
+["Chhichhore","Which actor played Derek?","Tahir Raj Bhasin"],
+["Chhichhore","Which National Film Award did it win?","Best Hindi Film"],
+["Chhichhore","Which Arijit Singh song is from this film?","Khairiyat"],
+["Drive / Dil Bechara","On which platform did Drive release?","Netflix"],
+["Drive / Dil Bechara","Who was his female co-star in Drive?","Jacqueline Fernandez"],
+["Drive / Dil Bechara","Dil Bechara is the official adaptation of which novel?","The Fault in Our Stars"],
+["Drive / Dil Bechara","Who played Kizie Basu?","Sanjana Sanghi"],
+["Drive / Dil Bechara","Which city is Dil Bechara set in?","Jamshedpur"],
+["Drive / Dil Bechara","Who composed the music for Dil Bechara?","A. R. Rahman"]
+];
+const app=document.getElementById('app');
+let order,i,score,missed,shown;
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.random()*(k+1)|0;[a[k],a[j]]=[a[j],a[k]]}return a}
+function home(){
+app.innerHTML=`<h1>🎬 Sushant Singh Rajput<br>Film Quiz</h1><p class="mu">50 questions from his films. Think of the answer, tap to reveal, then mark yourself.</p>
+<div class="card"><button id="a">Start in film order</button><button class="g" id="b">Shuffle questions</button></div>`;
+document.getElementById('a').onclick=()=>start(false);
+document.getElementById('b').onclick=()=>start(true);}
+function start(sh,list){order=list||(sh?shuffle(Q.map((_,k)=>k)):Q.map((_,k)=>k));i=0;score=0;missed=[];show();}
+function show(){
+const q=Q[order[i]];shown=false;
+app.innerHTML=`<div class="mu">Question ${i+1} of ${order.length} · Score ${score}</div><div class="bar"><i style="width:${i/order.length*100}%"></i></div>
+<div class="card"><div class="tag">${q[0]}</div><div class="q" style="margin-top:8px">${q[1]}</div>
+<div id="r" class="hide"><div class="ans">${q[2]}</div><div class="row"><button class="no" id="n">Missed</button><button class="ok" id="y">Got it</button></div></div>
+<button id="s">Show answer</button></div>`;
+document.getElementById('s').onclick=e=>{document.getElementById('r').classList.remove('hide');e.target.classList.add('hide')};
+document.getElementById('y').onclick=()=>{score++;next()};
+document.getElementById('n').onclick=()=>{missed.push(order[i]);next()};}
+function next(){i++;i<order.length?show():end();}
+function end(){
+const p=Math.round(score/order.length*100);
+const msg=p>=90?"Superfan! 🌟":p>=70?"Great memory!":p>=40?"Good effort. Rewatch time!":"Time for a film marathon 🍿";
+app.innerHTML=`<h1>Done!</h1><div class="card"><div class="big">${score}/${order.length}</div><p class="mu" style="text-align:center">${msg}</p>
+${missed.length?`<button id="m">Retry ${missed.length} missed</button>`:''}<button class="g" id="h">Back to start</button></div>`;
+if(missed.length)document.getElementById('m').onclick=()=>start(true,shuffle(missed));
+document.getElementById('h').onclick=home;}
+home();
+</script></body></html>
