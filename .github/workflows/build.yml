@@ -16,8 +16,10 @@ jobs:
           distribution: temurin
           java-version: 17
       - run: mkdir -p www && cp index.html www/index.html
+      - run: mkdir -p assets && cp icon-*.png assets/
       - run: npm install
       - run: npx cap add android
+      - run: npx @capacitor/assets generate --android
       - run: npx cap sync android
       - run: ./gradlew assembleDebug
         working-directory: android
