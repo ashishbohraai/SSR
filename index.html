@@ -35,8 +35,9 @@ button.g{background:rgba(255,255,255,.1);box-shadow:none;border:1px solid rgba(2
 .ring{width:170px;height:170px;border-radius:50%;margin:10px auto;display:grid;place-items:center}
 .ring div{width:138px;height:138px;border-radius:50%;background:#17142f;display:grid;place-items:center;font-size:38px;font-weight:800}
 .hide{display:none}
-.q{min-height:80px}button.opt{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);box-shadow:none;text-align:left;font-weight:600}button.opt.right{background:linear-gradient(135deg,#1fb97c,#2ecc8f);border-color:transparent}button.opt.wrong{background:linear-gradient(135deg,#f0476a,#ff6b81);border-color:transparent;animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}</style></head><body><main>
+.q{min-height:80px}button.opt{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);box-shadow:none;text-align:left;font-weight:600}button.opt.right{background:linear-gradient(135deg,#1fb97c,#2ecc8f);border-color:transparent}button.opt.wrong{background:linear-gradient(135deg,#f0476a,#ff6b81);border-color:transparent;animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}#snd{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:5;width:44px;height:44px;padding:0;margin:0;border-radius:50%;font-size:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);box-shadow:none}.tn{font-weight:700;color:var(--gold)}.tn.low{color:var(--no)}.tbar{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-top:14px}.tbar i{display:block;height:100%;width:100%;background:var(--gold);border-radius:3px}#msg{color:var(--no);font-weight:700;margin-top:12px;text-align:center}</style></head><body><main>
 <div id="app"></div>
+<button id="snd"></button>
 </main>
 <script>
 const Q=[
@@ -94,8 +95,9 @@ const Q=[
 const D=[["Shuddh Desi Romance", "PK", "Detective Byomkesh Bakshy!"], ["Five Point Someone", "2 States", "Revolution 2020"], ["Govind Patel", "Ali Hashmi", "Bittoo Sharma"], ["Surat", "Vadodara", "Mumbai"], ["Amit Sadh", "Vicky Kaushal", "Manav Kaul"], ["Rajkumar Hirani", "Maneesh Sharma", "Abhishek Chaubey"], ["Kabir", "Rohan", "Aditya"], ["Udaipur", "Jodhpur", "Lucknow"], ["Vaani Kapoor", "Kiara Advani", "Bhumi Pednekar"], ["Habib Faisal", "Shaad Ali", "Abhishek Kapoor"], ["Bhairon Singh", "Jaggu", "Tapasvi"], ["Karan Johar", "Abhishek Kapoor", "Nitesh Tiwari"], ["Anurag Kashyap", "Vishal Bhardwaj", "Shoojit Sircar"], ["1920, Bombay", "1947, Delhi", "1965, Calcutta"], ["Neeraj Kabi", "Meiyang Chang", "Rajkummar Rao"], ["Nitesh Tiwari", "Raj Kumar Gupta", "Shimit Amin"], ["Cricket coach", "Railway engineer", "Bank clerk"], ["Disha Patani", "Bhumi Pednekar", "Shraddha Kapoor"], ["Kiara Advani", "Kriti Sanon", "Sanjana Sanghi"], ["Boman Irani", "Pankaj Tripathi", "Manoj Bajpayee"], ["The 2007 T20 World Cup final", "The 2015 World Cup semi-final", "The 2013 Champions Trophy final"], ["Patna", "Jamshedpur", "Kharagpur"], ["Striker", "Defender", "Midfielder"], ["Rohan Mehra", "Aditya Singh", "Kabir Malhotra"], ["Shraddha Kapoor", "Parineeti Chopra", "Sara Ali Khan"], ["Prague", "Vienna", "Paris"], ["Rehan", "Imran", "Zubin"], ["Temple priest", "Hotel owner", "Tour guide"], ["Janhvi Kapoor", "Ananya Panday", "Tara Sutaria"], ["The 2004 tsunami", "The 2005 Mumbai floods", "The 2001 Gujarat earthquake"], ["Man Singh", "Vakil Singh", "Gujjar"], ["The Thar desert, 1947", "Hill villages of Uttarakhand, 1980", "Mumbai slums, 1990"], ["Abhishek Kapoor", "Anurag Kashyap", "Tigmanshu Dhulia"], ["Sanjana Sanghi", "Sara Ali Khan", "Radhika Apte"], ["Ashutosh Rana", "Ranvir Shorey", "Pankaj Tripathi"], ["Neeraj Pandey", "Abhishek Kapoor", "Dibakar Banerjee"], ["Raghav Kulkarni", "Anand Mishra", "Mayank Rao"], ["B7", "H1", "Block C"], ["Kriti Sanon", "Alia Bhatt", "Disha Patani"], ["Prateik Babbar", "Tahir Raj Bhasin", "Naveen Polishetty"], ["Varun Sharma", "Tushar Pandey", "Tahir Raj Bhasin"], ["Naveen Polishetty", "Tushar Pandey", "Varun Sharma"], ["Best Popular Film", "Best Actor", "Best Screenplay"], ["Phir Bhi Tumko Chahunga", "Tum Hi Ho", "Channa Mereya"], ["Amazon Prime Video", "Disney+ Hotstar", "ZEE5"], ["Kriti Sanon", "Sara Ali Khan", "Disha Patani"], ["Looking for Alaska", "Paper Towns", "Me Before You"], ["Sara Ali Khan", "Bhumi Pednekar", "Shraddha Kapoor"], ["Ranchi", "Kolkata", "Patna"], ["Amit Trivedi", "Pritam", "Vishal-Shekhar"]];
 const app=document.getElementById('app');
 let order,i,score,missed;
-let actx;
-function chime(){try{const C=window.AudioContext||window.webkitAudioContext;actx=actx||new C();if(actx.state==='suspended')actx.resume();const t=actx.currentTime;[[880,0],[1318.5,.12],[1760,.24]].forEach(([fr,d])=>{const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=fr;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(.25,t+d+.02);g.gain.exponentialRampToValueAtTime(.001,t+d+1);o.connect(g);g.connect(actx.destination);o.start(t+d);o.stop(t+d+1.05)})}catch(e){}}
+let actx,T;const TL=20;let snd=true;try{snd=localStorage.getItem('snd')!=='off'}catch(e){}
+function setSnd(v){snd=v;try{localStorage.setItem('snd',v?'on':'off')}catch(e){}const b=document.getElementById('snd');b.textContent=v?'🔔':'🔕';b.setAttribute('aria-label',v?'Sound on':'Sound off');}
+function chime(){if(!snd)return;try{const C=window.AudioContext||window.webkitAudioContext;actx=actx||new C();if(actx.state==='suspended')actx.resume();const t=actx.currentTime;[[880,0],[1318.5,.12],[1760,.24]].forEach(([fr,d])=>{const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=fr;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(.25,t+d+.02);g.gain.exponentialRampToValueAtTime(.001,t+d+1);o.connect(g);g.connect(actx.destination);o.start(t+d);o.stop(t+d+1.05)})}catch(e){}}
 function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.random()*(k+1)|0;[a[k],a[j]]=[a[j],a[k]]}return a}
 function home(){
 app.innerHTML=`<div class="hero"><div class="reel">🎬</div><div class="kick">A TRIBUTE QUIZ</div><h1>Sushant Singh Rajput</h1><div class="sub">Film Quiz</div>
@@ -106,17 +108,22 @@ document.getElementById('a').onclick=()=>start(false);
 document.getElementById('b').onclick=()=>start(true);}
 function start(sh,list){order=list||(sh?shuffle(Q.map((_,k)=>k)):Q.map((_,k)=>k));i=0;score=0;missed=[];show();}
 function show(){
+clearInterval(T);
 const q=Q[order[i]];let done=false;
 const opts=shuffle([q[2],...D[order[i]]]);
-app.innerHTML=`<div class="top"><span>Question <b>${i+1}</b> / ${order.length}</span><span>Score <b>${score}</b></span></div><div class="bar"><i style="width:${i/order.length*100}%"></i></div>
-<div class="card"><span class="tag">${q[0]}</span><div class="q">${q[1]}</div>${opts.map(o=>`<button class="opt">${o}</button>`).join('')}<button id="nx" class="hide">Next →</button></div>`;
-const nx=document.getElementById('nx');
-document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
-if(done)return;done=true;
+app.innerHTML=`<div class="top"><span>Question <b>${i+1}</b> / ${order.length}</span><span id="tn" class="tn">${TL}s</span><span>Score <b>${score}</b></span></div><div class="bar"><i style="width:${i/order.length*100}%"></i></div>
+<div class="card"><span class="tag">${q[0]}</span><div class="tbar"><i id="tb"></i></div><div class="q">${q[1]}</div>${opts.map(o=>`<button class="opt">${o}</button>`).join('')}<div id="msg"></div><button id="nx" class="hide">Next →</button></div>`;
+const nx=document.getElementById('nx'),tb=document.getElementById('tb'),tn=document.getElementById('tn');
+function lock(b){
+if(done)return;done=true;clearInterval(T);
 document.querySelectorAll('.opt').forEach(x=>{if(x.textContent===q[2])x.classList.add('right')});
-if(b.textContent===q[2]){chime();score++}else{b.classList.add('wrong');missed.push(order[i])}
-nx.classList.remove('hide');nx.textContent=i+1<order.length?'Next →':'See result';});
-nx.onclick=next;}
+if(b&&b.textContent===q[2]){chime();score++}
+else{if(b)b.classList.add('wrong');else document.getElementById('msg').textContent="⏰ Time's up!";missed.push(order[i])}
+nx.classList.remove('hide');nx.textContent=i+1<order.length?'Next →':'See result';}
+document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>lock(b));
+nx.onclick=next;
+const t0=Date.now();
+T=setInterval(()=>{const r=Math.max(0,TL-(Date.now()-t0)/1000);tb.style.width=r/TL*100+'%';tn.textContent=Math.ceil(r)+'s';if(r<=5)tn.classList.add('low');if(r<=0)lock(null)},100);}
 function next(){i++;i<order.length?show():end();}
 function end(){
 const p=Math.round(score/order.length*100);
@@ -127,5 +134,7 @@ app.innerHTML=`<div class="hero"><div class="kick">YOUR RESULT</div><h1>${msg}</
 ${missed.length?`<button id="m">Retry ${missed.length} missed</button>`:''}<button class="g" id="h">Back to start</button></div>`;
 if(missed.length)document.getElementById('m').onclick=()=>start(true,shuffle(missed));
 document.getElementById('h').onclick=home;}
+setSnd(snd);
+document.getElementById('snd').onclick=()=>{setSnd(!snd);if(snd)chime()};
 home();
 </script></body></html>
